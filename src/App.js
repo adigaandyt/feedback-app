@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import React from "react";
@@ -10,6 +9,7 @@ import FeedbackStats from "./components/FeedbackStats";
 import FeedbackForm from "./components/FeedbackForm";
 import About from "./pages/About";
 import AboutIconLink from "./components/AboutIconLink";
+import { FeedbackProvider } from "./context/FeedbackContext";
 
 //Returning JSX, Javascript XML - syntactic sugar
 //( syntax within a programming language that is
@@ -17,35 +17,33 @@ import AboutIconLink from "./components/AboutIconLink";
 //Syntax extension that allows to put html directly into Javascript
 
 //Everything in the JSX return needs to be wrapped in a single fragment (one parent element)
+
+//Add context so we dont have to do prop drilling
+//so we dont have to pass props at every level
 function App() {
-  const [feedback, setFeedback] = useState(FeedbackData);
-  const addFeedback = (newFeedback) => {
-    newFeedback.id = uuidv4();
-    setFeedback([newFeedback, ...feedback]);
-    console.log(...feedback);
-  };
-
   return (
-    <Router>
-      <Header />
-      <div className='container'>
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <>
-                <FeedbackForm handleAdd={addFeedback} />
-                <FeedbackStats feedback={feedback} />
-                <FeedbackList feedback={feedback} />
-              </>
-            }
-          ></Route>
+    <FeedbackProvider>
+      <Router>
+        <Header />
+        <div className='container'>
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <>
+                  <FeedbackForm />
+                  <FeedbackStats />
+                  <FeedbackList />
+                </>
+              }
+            ></Route>
 
-          <Route path='/about' element={<About />} />
-        </Routes>
-        <AboutIconLink />
-      </div>
-    </Router>
+            <Route path='/about' element={<About />} />
+          </Routes>
+          <AboutIconLink />
+        </div>
+      </Router>
+    </FeedbackProvider>
   );
 }
 
