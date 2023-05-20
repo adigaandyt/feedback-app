@@ -8,10 +8,10 @@ function FeedbackStats({ feedback }) {
     }, 0) / feedback.length;
 
   return (
-    <div className="feedback-stats">
+    <div className='feedback-stats'>
       <h4>{feedback.length} Reviews</h4>
       {/*if is null show 0 else show average */}
-      <h4>Average: {isNaN(average) ? 0 : average} </h4>
+      <h4>Average: {isNaN(average) ? 0 : average.toFixed(1)} </h4>
     </div>
   );
 }

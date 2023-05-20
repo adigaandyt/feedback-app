@@ -3,7 +3,7 @@ import Card from "./shared/Card";
 import Button from "./shared/Button";
 import RatingSelect from "./RatingSelect";
 
-function FeedbackForm() {
+function FeedbackForm({ handleAdd }) {
   const [text, setText] = useState("");
   const [rating, setRating] = useState(10);
   const handleClick = () => {
@@ -15,37 +15,44 @@ function FeedbackForm() {
     if (text === "" || text.length < 10) {
       setBtnDisabled(true);
       setMessage("Enter 10 words to submit");
-      console.log({ text });
     } else {
       setBtnDisabled(false);
       setMessage("");
     }
     setText(e.target.value);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (text.trim().length > 10) {
+      const newFeedback = {
+        text: text,
+        rating: rating,
+      };
+      handleAdd(newFeedback);
+    }
+  };
 
   return (
     <Card>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h2>Enter Rating</h2>
-        <RatingSelect select={(rating) => setRating(rating)} />
-        <div className="input-group" placeholder="Review">
+        <RatingSelect
+          select={(rating) => setRating(rating)}
+          selected={rating}
+        />
+        <div className='input-group' placeholder='Review'>
           <input
             onChange={handleTextChange}
-            type="text"
-            placeholder="Write a review"
+            type='text'
+            placeholder='Write a review'
             value={text}
           />
-          <Button
-            onClick={handleClick}
-            type="button"
-            version="primary"
-            isDisabled={btnDisabled}
-          >
+          <Button type='submit' version='primary' isDisabled={btnDisabled}>
             Submit
           </Button>
         </div>
         {/*if theres a message then show message in a div */}
-        {message && <div className="message">{message} </div>}
+        {message && <div className='message'>{message} </div>}
       </form>
     </Card>
   );
