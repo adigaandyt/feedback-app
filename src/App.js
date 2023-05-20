@@ -4,6 +4,8 @@ import Header from "./components/Header";
 import FeedbackItem from "./components/FeedbackItem";
 import FeedbackData from "./db";
 import FeedbackList from "./components/FeedbackList";
+import FeedbackStats from "./components/FeedbackStats";
+import FeedbackForm from "./components/FeedbackForm";
 
 //Returning JSX, Javascript XML - syntactic sugar
 //( syntax within a programming language that is
@@ -18,6 +20,8 @@ function App() {
     <>
       <Header />
       <div className="container">
+        <FeedbackForm />
+        <FeedbackStats feedback={feedback} />
         <FeedbackList feedback={feedback} />
       </div>
     </>
