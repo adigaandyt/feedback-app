@@ -51,9 +51,11 @@ function FeedbackForm() {
       };
       if (feedbackEditMode.edit === true) {
         updateFeedback(feedbackEditMode.item.id, newFeedback);
+        feedbackEditMode.edit = false;
       } else {
         addFeedback(newFeedback);
       }
+      setText("");
     }
   };
 
@@ -65,19 +67,19 @@ function FeedbackForm() {
           select={(rating) => setRating(rating)}
           selected={rating}
         />
-        <div className="input-group" placeholder="Review">
+        <div className='input-group' placeholder='Review'>
           <input
             onChange={handleTextChange}
-            type="text"
-            placeholder="Write a review"
+            type='text'
+            placeholder='Write a review'
             value={text}
           />
-          <Button type="submit" version="primary" isDisabled={btnDisabled}>
+          <Button type='submit' version='primary' isDisabled={btnDisabled}>
             Submit
           </Button>
         </div>
         {/*if theres a message then show message in a div */}
-        {message && <div className="message">{message} </div>}
+        {message && <div className='message'>{message} </div>}
       </form>
     </Card>
   );
